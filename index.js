@@ -9,12 +9,12 @@ const deepgramApiKey = process.env.API_KEY;
 // Location of the file you want to transcribe. Should include filename and extension.
 // Example of a local file: ../../Audio/life-moves-pretty-fast.wav
 // Example of a remote file: https://static.deepgram.com/examples/interview_speech-analytics.wav
-const file = "https://developers.deepgram.com/data/audio/life-moves-pretty-fast.wav";
+const file = "afor.mp3";
 
 // Mimetype for the file you want to transcribe
 // Only necessary if transcribing a local file
 // Example: audio/wav
-const mimetype = "audio/wav";
+const mimetype = "audio/mp3";
 
 // Initialize the Deepgram SDK
 const deepgram = new Deepgram(deepgramApiKey);
@@ -42,6 +42,7 @@ if (file.startsWith("http")) {
 deepgram.transcription
 	.preRecorded(source, {
 		punctuate: true,
+        language: "es",
 	})
 	.then((response) => {
 		// Write the response to the console

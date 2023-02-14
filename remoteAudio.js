@@ -1,6 +1,6 @@
 import fs from "fs";
 import pkg from '@deepgram/sdk';
-const { Deepgram } = pkg; 
+const { Deepgram } = pkg;
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -8,29 +8,13 @@ dotenv.config();
 const deepgramApiKey = process.env.API_KEY;
 
 // Location of the file you want to transcribe
-const audioFilePath = "midu.mp3";
-
-// MIME type for the file you want to transcribe (only necessary if transcribing a local file)
-const audioFileMimetype = "audio/mp3";
+// Example of a remote file: https://developers.deepgram.com/data/audio/cuentan_que_hace_mucho_tiempo.mp3
+const audioFilePath = "https://developers.deepgram.com/data/audio/cuentan_que_hace_mucho_tiempo.mp3";
 
 // Initialize the Deepgram SDK with your API key
 const deepgram = new Deepgram(deepgramApiKey);
 
-// Check whether the audio file is local or remote, and prepare accordingly
-let audioSource;
-if (audioFilePath.startsWith("http")) {
-	// Audio file is remote
-	audioSource = {
-		url: audioFilePath,
-	};
-} else {
-	// Audio file is local
-	const audioFileBuffer = fs.readFileSync(audioFilePath);
-	audioSource = {
-		buffer: audioFileBuffer,
-		mimetype: audioFileMimetype,
-	};
-}
+const audioSource = { url: audioFilePath };
 
 // Set options for transcription
 const transcriptionOptions = {
@@ -45,7 +29,7 @@ deepgram.transcription
 	.then((transcriptionResponse) => {
 		console.log("Transcription response:");
 		console.dir(transcriptionResponse, { depth: null });
-		// If you only want the transcript, you can access it like this:
+		// Show only transcript
 		// console.log(transcriptionResponse.results.channels[0].alternatives[0].transcript);
 	})
 	.catch((error) => {

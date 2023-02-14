@@ -1,12 +1,14 @@
-const fs = require("fs");
-const { Deepgram } = require("@deepgram/sdk");
-require('dotenv').config();
+import fs from "fs";
+import pkg from '@deepgram/sdk';
+const { Deepgram } = pkg; 
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Your Deepgram API Key
 const deepgramApiKey = process.env.API_KEY;
 
 // Location of the file you want to transcribe
-const audioFilePath = "afor.mp3";
+const audioFilePath = "midu.mp3";
 
 // MIME type for the file you want to transcribe (only necessary if transcribing a local file)
 const audioFileMimetype = "audio/mp3";

@@ -2,56 +2,50 @@ const fs = require("fs");
 const { Deepgram } = require("@deepgram/sdk");
 require('dotenv').config();
 
-
 // Your Deepgram API Key
 const deepgramApiKey = process.env.API_KEY;
 
-// Location of the file you want to transcribe. Should include filename and extension.
-// Example of a local file: ../../Audio/life-moves-pretty-fast.wav
-// Example of a remote file: https://static.deepgram.com/examples/interview_speech-analytics.wav
-const file = "afor.mp3";
+// Location of the file you want to transcribe
+const audioFilePath = "afor.mp3";
 
-// Mimetype for the file you want to transcribe
-// Only necessary if transcribing a local file
-// Example: audio/wav
-const mimetype = "audio/mp3";
+// MIME type for the file you want to transcribe (only necessary if transcribing a local file)
+const audioFileMimetype = "audio/mp3";
 
-// Initialize the Deepgram SDK
+// Initialize the Deepgram SDK with your API key
 const deepgram = new Deepgram(deepgramApiKey);
 
-// Check whether requested file is local or remote, and prepare accordingly
-if (file.startsWith("http")) {
-	// File is remote
-	// Set the source
-	source = {
-		url: file,
+// Check whether the audio file is local or remote, and prepare accordingly
+let audioSource;
+if (audioFilePath.startsWith("http")) {
+	// Audio file is remote
+	audioSource = {
+		url: audioFilePath,
 	};
 } else {
-	// File is local
-	// Open the audio file
-	const audio = fs.readFileSync(file);
-
-	// Set the source
-	source = {
-		buffer: audio,
-		mimetype: mimetype,
+	// Audio file is local
+	const audioFileBuffer = fs.readFileSync(audioFilePath);
+	audioSource = {
+		buffer: audioFileBuffer,
+		mimetype: audioFileMimetype,
 	};
 }
 
-// Send the audio to Deepgram and get the response
-deepgram.transcription
-	.preRecorded(source, {
-		punctuate: true,
-        language: "es",
-        diarize: true,
-	})
-	.then((response) => {
-		// Write the response to the console
-		console.dir(response, { depth: null });
+// Set options for transcription
+const transcriptionOptions = {
+	punctuate: true,  // Include punctuation in the transcription
+	language: "es",  // Transcribe audio in Spanish
+	diarize: true,   // Distinguish between different speakers in the audio
+};
 
-		// Write only the transcript to the console
-		//console.dir(response.results.channels[0].alternatives[0].transcript, { depth: null });
+// Send the audio to Deepgram for transcription and handle the response
+deepgram.transcription
+	.preRecorded(audioSource, transcriptionOptions)
+	.then((transcriptionResponse) => {
+		console.log("Transcription response:");
+		console.dir(transcriptionResponse, { depth: null });
+		// If you only want the transcript, you can access it like this:
+		// console.log(transcriptionResponse.results.channels[0].alternatives[0].transcript);
 	})
-	.catch((err) => {
-		console.log(err);
+	.catch((error) => {
+		console.error("Error during transcription:", error);
 	});

@@ -43,6 +43,7 @@ deepgram.transcription
 	.preRecorded(source, {
 		punctuate: true,
         language: "es",
+        diarize: true,
 	})
 	.then((response) => {
 		// Write the response to the console

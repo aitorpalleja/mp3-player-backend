@@ -18,9 +18,11 @@ async function downloadYoutubeVideo(url) {
     });
 
     console.log('Audio downloaded successfully.');
+    console.log('Channel Avatar:', videoInfo.videoDetails.author.thumbnails[0].url);
     console.log('Title:', videoInfo.videoDetails.title);
     console.log('Thumbnail:', videoInfo.videoDetails.thumbnails[0].url);
     console.log('Channel:', videoInfo.videoDetails.author.name);
+    console.log(videoInfo.videoDetails)
 
     transcribeLocalAudio(fileName)
     
@@ -28,3 +30,5 @@ async function downloadYoutubeVideo(url) {
     console.error('Error downloading audio:', error);
   }
 }
+
+downloadYoutubeVideo("https://www.youtube.com/shorts/Z-jUZ6aXY_M")

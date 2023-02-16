@@ -22,7 +22,12 @@ const VideoSchema = new Mongoose.Schema({
     trancribedText: {
         type: String,
         required: true
+    },
+    textSentiment: {
+        type: String, 
+        required: true
     }
+
 
 });
 

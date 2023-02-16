@@ -23,12 +23,6 @@ app.use(function (req, res, next) {
 
 app.use(router);
 
-app.get('/get-javascript-tweets', (req, res) => {
-    getJavaScriptTweets()
-      .then(data => res.send(data))
-      .catch(error => res.status(500).send(error.message));
-  });
-
 const options = {
     socketTimeoutMS: 0,
     keepAlive: true,

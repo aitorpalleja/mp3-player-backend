@@ -2,7 +2,7 @@ import { createWriteStream } from 'fs';
 import ytdl from 'ytdl-core';
 import transcribeLocalAudio from './transcribeLocalAudio.js'
 
-async function downloadAudio(url) {
+async function downloadYoutubeVideo(url) {
   try {
     const videoInfo = await ytdl.getInfo(url)
     const videoId = videoInfo.videoDetails.videoId;
@@ -28,6 +28,3 @@ async function downloadAudio(url) {
     console.error('Error downloading audio:', error);
   }
 }
-
-downloadAudio('https://www.youtube.com/shorts/Yuqm5JfpIC4');
-

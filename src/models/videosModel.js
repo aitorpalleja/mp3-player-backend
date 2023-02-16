@@ -21,9 +21,9 @@ const VideoSchema = new Mongoose.Schema({
         type: Date,
         required: true
     },
-    trancribedText: {
+    transcribedText: {
         type: String,
-        required: true
+        required: false
     }
 
 });

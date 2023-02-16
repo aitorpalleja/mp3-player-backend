@@ -13,7 +13,7 @@ const VideoSchema = new Mongoose.Schema({
         type: String,
         required: true
     },
-    videoThumbail: {
+    videoThumbnail: {
         type: String,
         required: true
     },

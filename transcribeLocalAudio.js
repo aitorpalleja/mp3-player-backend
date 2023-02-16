@@ -36,12 +36,24 @@ async function transcribeLocalAudio(audioFilePath) {
 		const transcriptionResponse = await deepgram.transcription
 			.preRecorded(audioSource, transcriptionOptions);
 		console.log("Transcription response:");
-		console.dir(transcriptionResponse, { depth: null });
+		//console.dir(transcriptionResponse, { depth: null });
+		console.log(transcriptionResponse.results.channels[0].alternatives[0].transcript);
+		
+		// Delete the audio file
+		fs.unlink(audioFilePath, (err) => {
+			if (err) {
+				console.error(err);
+				return;
+			}
+			console.log(`${audioFilePath} was deleted.`);
+		});
 		return transcriptionResponse;
 	} catch (error) {
 		console.error("Error during transcription:", error);
 		return error;
 	}
+
 }
+
 
 export default transcribeLocalAudio;

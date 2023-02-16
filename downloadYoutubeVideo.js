@@ -29,5 +29,5 @@ async function downloadAudio(url) {
   }
 }
 
-downloadAudio('https://www.youtube.com/watch?v=v7OlF2AbBM8&ab_channel=afordigital');
+downloadAudio('https://www.youtube.com/shorts/Yuqm5JfpIC4');
 

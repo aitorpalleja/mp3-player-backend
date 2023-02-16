@@ -8,7 +8,7 @@ dotenv.config();
 const deepgramApiKey = process.env.API_KEY;
 
 // Location of the file you want to transcribe
-const audioFilePath = "midu.mp3";
+const audioFilePath = "audio.mp3";
 
 // MIME type for the file you want to transcribe (only necessary if transcribing a local file)
 const audioFileMimetype = "audio/mp3";

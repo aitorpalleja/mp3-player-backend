@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "@deepgram/sdk": "^1.17.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "ytdl-core": "^4.11.2"
   }
 }

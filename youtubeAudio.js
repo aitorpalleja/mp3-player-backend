@@ -1,5 +1,21 @@
 import { createWriteStream } from 'fs';
 import ytdl from 'ytdl-core';
 
-ytdl('https://www.youtube.com/watch?v=lq0O1L-7fBo&ab_channel=afordigital', { filter: 'audioonly' })
-    .pipe(createWriteStream('audio.mp3'));
+async function downloadAudio(url, fileName) {
+  try {
+    const audioStream = ytdl(url, { filter: 'audioonly' });
+    const outputStream = createWriteStream(fileName);
+
+    await new Promise((resolve, reject) => {
+      audioStream.pipe(outputStream);
+      outputStream.on('finish', resolve);
+      outputStream.on('error', reject);
+    });
+
+    console.log('Audio downloaded successfully.');
+  } catch (error) {
+    console.error('Error downloading audio:', error);
+  }
+}
+
+downloadAudio('https://www.youtube.com/shorts/Q8SX7gaA-wI', 'audio.mp3');

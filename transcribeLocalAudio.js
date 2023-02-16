@@ -45,6 +45,7 @@ async function transcribeLocalAudio(audioFilePath) {
 				console.error(err);
 				return;
 			}
+			
 			console.log(`${audioFilePath} was deleted.`);
 		});
 		return transcriptionResponse;
@@ -54,6 +55,5 @@ async function transcribeLocalAudio(audioFilePath) {
 	}
 
 }
-
 
 export default transcribeLocalAudio;

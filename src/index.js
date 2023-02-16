@@ -1,6 +1,6 @@
 import Express from "express";
 import Mongoose from "mongoose";
-//import router from "./routes/routes.js";
+import router from "./routes/routes.js";
 import dotenv from 'dotenv'
 
 
@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-//app.use(router);
+app.use(router);
 
 app.get('/get-javascript-tweets', (req, res) => {
     getJavaScriptTweets()

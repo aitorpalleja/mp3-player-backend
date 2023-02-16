@@ -22,7 +22,7 @@ async function downloadYoutubeVideo(url) {
     console.log('Title:', videoInfo.videoDetails.title);
     console.log('Thumbnail:', videoInfo.videoDetails.thumbnails[0].url);
     console.log('Channel:', videoInfo.videoDetails.author.name);
-    console.log(videoInfo.videoDetails)
+    console.log('Publish Date:', videoInfo.videoDetails.publishDate)
 
     transcribeLocalAudio(fileName)
     
@@ -31,4 +31,4 @@ async function downloadYoutubeVideo(url) {
   }
 }
 
-downloadYoutubeVideo("https://www.youtube.com/shorts/Z-jUZ6aXY_M")
+downloadYoutubeVideo('https://www.youtube.com/shorts/Yuqm5JfpIC4');

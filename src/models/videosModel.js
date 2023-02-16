@@ -1,10 +1,12 @@
 import Mongoose from "mongoose"
-import { Creator } from "./creatorsModel";
 
 const VideoSchema = new Mongoose.Schema({
-    creatorId: {
-        type: Mongoose.Schema.Types.ObjectId,
-        ref: "Creator",
+    channelName: {
+        type: String,
+        required: true
+    },
+    channelAvatar: {
+        type: String,
         required: true
     },
     videoTitle: {
@@ -22,15 +24,10 @@ const VideoSchema = new Mongoose.Schema({
     trancribedText: {
         type: String,
         required: true
-    },
-    textSentiment: {
-        type: String, 
-        required: false
     }
-
 
 });
 
 const Video = Mongoose.model("Video", VideoSchema);
 
-export {Creator, Video} ;
+export default Video;

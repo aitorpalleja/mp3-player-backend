@@ -25,7 +25,7 @@ const VideoSchema = new Mongoose.Schema({
     },
     textSentiment: {
         type: String, 
-        required: true
+        required: false
     }
 
 

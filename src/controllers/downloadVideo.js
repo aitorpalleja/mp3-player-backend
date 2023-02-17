@@ -1,44 +1,39 @@
-import Video from '../models/videosModel.js';
+import Song from '../models/songModel.js';
 import { createWriteStream } from 'fs';
 import ytdl from 'ytdl-core';
+import fs from 'fs/promises';
+import { promisify } from 'util';
+import { pipeline } from 'stream';
 
+
+const pipelineAsync = promisify(pipeline);
 
 async function downloadVideo(url) {
   try {
-    const videoInfo = await ytdl.getInfo(url)
+    const videoInfo = await ytdl.getInfo(url);
     const videoId = videoInfo.videoDetails.videoId;
     const fileName = `${videoId}.mp3`;
 
     const audioStream = ytdl(url, { filter: 'audioonly' });
-    const outputStream = createWriteStream(fileName);
+    const fileWriteStream = createWriteStream(fileName);
+    await pipelineAsync(audioStream, fileWriteStream);
 
-    await new Promise((resolve, reject) => {
-      audioStream.pipe(outputStream);
-      outputStream.on('finish', resolve);
-      outputStream.on('error', reject);
-    });
+    const fileBuffer = await fs.readFile(fileName);
+    await fs.unlink(fileName);
 
-    const videoData = new Video({
+    const videoData = new Song({
       channelName: videoInfo.videoDetails.author.name,
       channelAvatar: videoInfo.videoDetails.author.thumbnails[0].url,
-      videoTitle: videoInfo.videoDetails.title,
-      videoThumbail: videoInfo.videoDetails.author.name,
+      songTitle: videoInfo.videoDetails.title,
+      songThumbnail: videoInfo.videoDetails.thumbnails[0].url,
       publishData: videoInfo.videoDetails.publishDate,
+      songData: fileBuffer,
+      songDuration: videoInfo.videoDetails.lengthSeconds
+
     });
 
-    await videoData.save()
+    await videoData.save();
     console.log('Video data stored in MongoDB.');
-
-
-    /*console.log('Audio downloaded successfully.');
-    console.log('Channel Avatar:', videoInfo.videoDetails.author.thumbnails[0].url);
-    console.log('Title:', videoInfo.videoDetails.title);
-    console.log('Thumbnail:', videoInfo.videoDetails.thumbnails[0].url);
-    console.log('Channel:', videoInfo.videoDetails.author.name);
-    console.log('Publish Date:', videoInfo.videoDetails.publishDate)
-
-    //transcribeLocalAudio(fileName)*/
-    
   } catch (error) {
     console.error('Error downloading audio:', error);
   }

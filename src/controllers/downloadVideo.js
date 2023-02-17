@@ -1,8 +1,9 @@
+import Video from '../models/videosModel.js';
 import { createWriteStream } from 'fs';
 import ytdl from 'ytdl-core';
-import transcribeLocalAudio from './transcribeLocalAudio.js'
 
-async function downloadYoutubeVideo(url) {
+
+async function downloadVideo(url) {
   try {
     const videoInfo = await ytdl.getInfo(url)
     const videoId = videoInfo.videoDetails.videoId;
@@ -17,18 +18,30 @@ async function downloadYoutubeVideo(url) {
       outputStream.on('error', reject);
     });
 
-    console.log('Audio downloaded successfully.');
+    const videoData = new Video({
+      channelName: videoInfo.videoDetails.author.name,
+      channelAvatar: videoInfo.videoDetails.author.thumbnails[0].url,
+      videoTitle: videoInfo.videoDetails.title,
+      videoThumbail: videoInfo.videoDetails.author.name,
+      publishData: videoInfo.videoDetails.publishDate,
+    });
+
+    await videoData.save()
+    console.log('Video data stored in MongoDB.');
+
+
+    /*console.log('Audio downloaded successfully.');
     console.log('Channel Avatar:', videoInfo.videoDetails.author.thumbnails[0].url);
     console.log('Title:', videoInfo.videoDetails.title);
     console.log('Thumbnail:', videoInfo.videoDetails.thumbnails[0].url);
     console.log('Channel:', videoInfo.videoDetails.author.name);
     console.log('Publish Date:', videoInfo.videoDetails.publishDate)
 
-    transcribeLocalAudio(fileName)
+    //transcribeLocalAudio(fileName)*/
     
   } catch (error) {
     console.error('Error downloading audio:', error);
   }
 }
 
-downloadYoutubeVideo('https://www.youtube.com/shorts/Yuqm5JfpIC4');
+export default downloadVideo;

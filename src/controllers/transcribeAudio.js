@@ -4,7 +4,7 @@ const { Deepgram } = pkg;
 import dotenv from 'dotenv';
 dotenv.config();
 
-async function transcribeLocalAudio(audioFilePath) {
+async function transcribeAudio(audioFilePath) {
 	// Your Deepgram API Key from the environment variable
 	const deepgramApiKey = process.env.API_KEY;
 
@@ -45,6 +45,7 @@ async function transcribeLocalAudio(audioFilePath) {
 				console.error(err);
 				return;
 			}
+			
 			console.log(`${audioFilePath} was deleted.`);
 		});
 		return transcriptionResponse;
@@ -55,5 +56,4 @@ async function transcribeLocalAudio(audioFilePath) {
 
 }
 
-
-export default transcribeLocalAudio;
+export default transcribeAudio;

@@ -2,6 +2,7 @@ import Express from "express";
 const router = Express.Router();
 
 import downloadVideo from '../controllers/downloadVideo.js';
+import { getData } from "../controllers/getData.js";
 
 
 router.get('/', (req, res) => {
@@ -16,6 +17,10 @@ router.get('/download', async (req, res) => {
   } catch (error) {
     res.status(500).send(`Error downloading video: ${error.message}`);
   }
+});
+
+router.get('/getData', (req, res) => {
+  getData(req,res)
 });
 
 

@@ -21,8 +21,8 @@ const SongSchema = new Mongoose.Schema({
         type: Date,
         required: true
     },
-    songData: {
-        type: Buffer,
+    songId: {
+        type: String,
         required: true
     },
     songDuration: {

@@ -21,13 +21,15 @@ async function downloadVideo(url) {
     const fileBuffer = await fs.readFile(fileName);
     await fs.unlink(fileName);
 
+    const songData = fileBuffer.toString('base64');
+
     const videoData = new Song({
       channelName: videoInfo.videoDetails.author.name,
       channelAvatar: videoInfo.videoDetails.author.thumbnails[0].url,
       songTitle: videoInfo.videoDetails.title,
       songThumbnail: videoInfo.videoDetails.thumbnails[0].url,
       publishData: videoInfo.videoDetails.publishDate,
-      songData: fileBuffer,
+      songData: songData,
       songDuration: videoInfo.videoDetails.lengthSeconds
 
     });

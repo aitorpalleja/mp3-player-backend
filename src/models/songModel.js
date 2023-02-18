@@ -22,7 +22,7 @@ const SongSchema = new Mongoose.Schema({
         required: true
     },
     songData: {
-        type: Buffer,
+        type: String,
         required: true
     },
     songDuration: {

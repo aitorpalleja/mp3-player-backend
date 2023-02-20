@@ -1,7 +1,6 @@
 import Express from "express";
 const router = Express.Router();
 
-import downloadVideo from '../controllers/downloadVideo.js';
 import { getData } from "../controllers/getData.js";
 
 

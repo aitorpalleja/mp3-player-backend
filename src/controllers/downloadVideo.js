@@ -23,11 +23,15 @@ async function downloadVideo(url) {
 
     const songData = fileBuffer.toString('base64');
 
+    const thumbnail = videoInfo.videoDetails.thumbnails.reduce((prev, current) => {
+      return (prev.width > current.width) ? prev : current;
+    });
+
     const videoData = new Song({
       channelName: videoInfo.videoDetails.author.name,
       channelAvatar: videoInfo.videoDetails.author.thumbnails[0].url,
       songTitle: videoInfo.videoDetails.title,
-      songThumbnail: videoInfo.videoDetails.thumbnails[0].url,
+      songThumbnail: thumbnail.url,
       publishData: videoInfo.videoDetails.publishDate,
       songData: songData,
       songDuration: videoInfo.videoDetails.lengthSeconds

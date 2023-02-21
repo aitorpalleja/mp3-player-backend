@@ -25,9 +25,7 @@ async function downloadVideo(url) {
 
     const songData = cloudinaryUpload.url;
 
-    const thumbnail = videoInfo.videoDetails.thumbnails.reduce((prev, current) => {
-      return (prev.width > current.width) ? prev : current;
-    });
+    const thumbnail = videoInfo.videoDetails.thumbnails.sort((a, b) => b.width - a.width)[0];
 
     const videoData = new Song({
       channelName: videoInfo.videoDetails.author.name,

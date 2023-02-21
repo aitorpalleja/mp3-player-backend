@@ -1,10 +1,17 @@
 import Express from "express";
 import Mongoose from "mongoose";
 import router from "./routes/routes.js";
+import cloudinary from 'cloudinary';
 import dotenv from 'dotenv'
 
-
 dotenv.config()
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 const mongodbRoute = process.env.MONGO_DB_URI;
 

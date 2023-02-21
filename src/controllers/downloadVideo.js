@@ -2,9 +2,9 @@ import Song from '../models/songModel.js';
 import { createWriteStream } from 'fs';
 import ytdl from 'ytdl-core';
 import fs from 'fs/promises';
+import cloudinary from 'cloudinary';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
-
 
 const pipelineAsync = promisify(pipeline);
 
@@ -18,10 +18,12 @@ async function downloadVideo(url) {
     const fileWriteStream = createWriteStream(fileName);
     await pipelineAsync(audioStream, fileWriteStream);
 
-    const fileBuffer = await fs.readFile(fileName);
+    const cloudinaryUpload = await cloudinary.v2.uploader.upload(fileName, { resource_type: "auto", folder: "audio" });
+    
+    // Delete file from local
     await fs.unlink(fileName);
 
-    const songData = fileBuffer.toString('base64');
+    const songData = cloudinaryUpload.url;
 
     const thumbnail = videoInfo.videoDetails.thumbnails.reduce((prev, current) => {
       return (prev.width > current.width) ? prev : current;

@@ -1,10 +1,10 @@
 import TopicData from '../models/songModel.js'
 
-export const getData = async (req, res) => {
+export const getData = async () => {
   try {
     const stats = await TopicData.find({});
-    res.json(stats);
+    return stats;
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    throw new Error(err.message);
   }
-};
+}; 

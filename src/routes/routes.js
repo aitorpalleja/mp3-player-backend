@@ -11,8 +11,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/download', async (req, res) => {
+  const { url } = req.query;
+  if (!url) {
+    return res.status(400).send('Invalid URL');
+  }
+
   try {
-    const { url } = req.query;
     await downloadVideo(url);
     res.send('Video downloaded successfully.');
   } catch (error) {
@@ -20,10 +24,15 @@ router.get('/download', async (req, res) => {
   }
 });
 
-router.get('/getData', (req, res) => {
-  getData(req,res)
-});
 
+router.get('/getData', async (req, res) => {
+  try {
+    const stats = await getData();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 
 export default router;
